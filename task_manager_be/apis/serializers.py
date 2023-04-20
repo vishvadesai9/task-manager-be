@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             "user_id",
             "username",
             "created_at",
+            "password"
         )
 
 class TaskSerializer(serializers.ModelSerializer):

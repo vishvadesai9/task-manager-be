@@ -8,3 +8,13 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     pagination_class = None
     queryset = User.objects.all()
+    
+    def create(self, request, *args, **kwargs):
+        username = request.data["username"]
+        username = username.strip()
+        duplicate = self.queryset.filter(username=username)
+        print(duplicate)
+        if duplicate:
+            return Response({"success":False, "message": "This username already exists. Try another username."})
+        else:
+            return super().create(request, *args, **kwargs)

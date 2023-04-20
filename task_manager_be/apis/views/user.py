@@ -12,9 +12,9 @@ class UserView(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         username = request.data["username"]
         username = username.strip()
-        duplicate = self.queryset.filter(username=username)
-        print(duplicate)
-        if duplicate:
-            return Response({"success":False, "message": "This username already exists. Try another username."})
+        username_exists = self.queryset.filter(username=username).first()
+        if username_exists:
+            username_exists = UserSerializer(username_exists).data
+            return Response({"success":True, "message": "Logged In", "userdata": username_exists})
         else:
             return super().create(request, *args, **kwargs)

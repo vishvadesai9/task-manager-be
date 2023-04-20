@@ -12,7 +12,6 @@ class TasksView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         user_id = request.query_params.get("user_id", "")
-        print("User", user_id)
         user_id = user_id.strip()
         user_tasks = self.queryset.filter(user_id=user_id).order_by("-due_date")
         data = TaskSerializer(user_tasks, many=True).data
